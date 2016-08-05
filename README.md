@@ -18,6 +18,9 @@
 - install lsb_release, fortune and cowsay via apt-get or aptitude
 - copy/clone files into /etc/update-motd.d/
 
+## Testing
+ - execute command run-parts /etc/update-motd.d/ for preview of the output
+
 ## Screenshot
 
 <img src='https://raw.githubusercontent.com/xTrinch/update-motd.d/master/motd-screenshot.PNG' alt='motd screenshot'>
