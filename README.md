@@ -14,9 +14,9 @@
 
 ## Installation (debian jessie)
 - remove /etc/motd and symlink dynamic motd with `ln -s /var/run/motd /etc/motd`
-- remove default "last login" text in /etc/ssh/sshd_config
+- remove default "last login" text in `/etc/ssh/sshd_config`
 - install lsb_release, fortune and cowsay via apt-get or aptitude
-- copy/clone files into /etc/update-motd.d/
+- copy/clone files into `/etc/update-motd.d/`
 
 ## Testing
  - execute command `run-parts /etc/update-motd.d/` for preview of the output
