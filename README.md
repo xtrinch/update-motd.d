@@ -1,8 +1,5 @@
 # MOTD bash scripts
 
-## Requirements
-- fortune, cowsay
-
 ## Displays:
  -  distribution info
  -  last login
