@@ -1,0 +1,30 @@
+#!/bin/sh
+
+user=$(whoami)
+date=`date`
+load=`cat /proc/loadavg | awk '{print $1" (1minute) "$2" (5minutes) "$3" (15minutes)"}'`
+root_usage=`df -h / | awk '/\// {print $(NF-1)}'`
+root_used=`df -h / | awk '/\// {print $(NF-2)}'`
+root_total=`df -h / | awk '/\// {print $(NF-3)}'`
+memory_usage=`free -m | awk '/Mem:/ { total=$2 } /buffers\/cache/ { used=$3 } END { printf("%3.1f%%", (used/total)*100)}'`
+memory=`free -m | awk '/Mem:/ { print $2 }'`
+memory_used=`free -m | awk '/buffers\/cache/ { print $3 }'`
+swap_usage=`free -m | awk '/Swap/ { printf("%3.1f%%", "exit !$2;$3/$2*100") }'`
+users=` w -s | grep -v WHAT | grep -v "load average" | wc -l`
+time=`uptime | grep -ohe 'up .*' | sed 's/,/\ hours/g' | awk '{ printf $2" "$3 }'`
+processes_total=`ps aux | wc -l`
+processes_user=`ps -U ${user} u | wc -l`
+ip=`ifconfig $(route | grep default | awk '{ print $8 }') | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}'`
+lastlog=`lastlog -u ${user} | grep -v Latest |  awk '{ printf $5" "$6" "$7" "$8" "$9" from "$3 }')`
+
+
+echo "\033[1;37mSystem information as of: $date\033[0m"
+echo "\033[1;31mLast login........ \033[1;34m" $lastlog
+echo "\033[1;31mSystem load....... \033[1;34m" $load
+echo "\033[1;31mIP................ \033[1;34m" $ip
+echo "\033[1;31mUptime............ \033[1;34m" "$time"
+echo "\033[1;31mMemory usage...... \033[1;34m" "using" $memory_used"/"$memory" MB ("$memory_usage")"
+echo "\033[1;31mUsage on /........ \033[1;34m" $root_used"/"$root_total "("$root_usage")"
+echo "\033[1;31mSwap usage........ \033[1;34m" $swap_usage
+echo "\033[1;31mSSH logins........ \033[1;34m" $users "open sessions"
+echo "\033[1;31mProcesses......... \033[1;34m" $processes_total "total," $processes_user "yours"

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+echo "\033[37m"
+/usr/games/fortune fortunes | /usr/games/cowsay
+#[ -f /etc/motd.tail ] && cat /etc/motd.tail || true
